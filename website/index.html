@@ -3,176 +3,186 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Batu Guldogan — Network Security Portfolio</title>
+  <title>Batu Guldogan — Security Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@200;300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-
-<nav class="nav" id="nav">
-  <div class="nav-inner">
-    <span class="nav-logo"><span class="nb">[</span>BG<span class="nb">]</span></span>
+<canvas id="circuit"></canvas>
+<nav id="nav">
+  <div class="nav-wrap">
+    <div class="nav-brand">
+      <div class="brand-hex">BG</div>
+      <div>
+        <div class="brand-name">Batu Guldogan</div>
+        <div class="brand-sub">Network Security · Lab 09</div>
+      </div>
+    </div>
     <div class="nav-links">
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
       <a href="#labs">Labs</a>
       <a href="#tls">TLS</a>
       <a href="#projects">Projects</a>
-      <a class="nav-cta" href="https://github.com/rachelartemis/portfolio-lab" target="_blank">GitHub ↗</a>
     </div>
+    <a class="nav-gh" href="https://github.com/rachelartemis/portfolio-lab" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+      GitHub
+    </a>
   </div>
 </nav>
 
-<canvas id="matrix"></canvas>
-
-<section class="hero" id="home">
-  <div class="glow-orb"></div>
-  <div class="hero-content">
-    <div class="eyebrow">
-      <span class="pulse-dot"></span>
-      Network Security Systems &nbsp;·&nbsp; Vizja University Warsaw &nbsp;·&nbsp; 2026
-    </div>
-    <h1 class="hero-name">
-      <span class="line1">Batu</span>
-      <span class="line2">Guldogan</span>
-    </h1>
-    <p class="hero-role">Computer Science Student &nbsp;<span class="sep">/</span>&nbsp; Security Enthusiast</p>
-
-    <div class="terminal">
-      <div class="term-bar">
-        <div class="tdots"><span class="td r"></span><span class="td y"></span><span class="td g"></span></div>
-        <span class="term-path">~/Desktop/portfolio-lab — bash</span>
+<section id="home" class="hero">
+  <div class="hero-wrap">
+    <div class="hero-left">
+      <div class="hero-badge"><span class="hb-dot"></span>VIZJA UNIVERSITY WARSAW · 2028</div>
+      <h1 class="hero-title">
+        <span class="ht-line">BATU</span>
+        <span class="ht-line ht-outline">GULDOGAN</span>
+      </h1>
+      <p class="hero-desc">Computer Science student specializing in network security, systems programming, and containerized infrastructure.</p>
+      <div class="hero-btns">
+        <a class="hbtn-primary" href="#labs">Explore Labs</a>
+        <a class="hbtn-ghost" href="https://github.com/rachelartemis/portfolio-lab" target="_blank">Source Code</a>
       </div>
-      <div class="term-body">
-        <div id="tlines"></div>
-        <div class="tcursor-row"><span class="tprompt">batu@vizja:~$&nbsp;</span><span class="tcaret" id="tcaret">█</span></div>
+      <div class="hero-kv">
+        <div class="kv"><span class="kv-k">Protocol</span><span class="kv-v">TLSv1.3</span></div>
+        <div class="kv"><span class="kv-k">Certificate</span><span class="kv-v">RSA-4096</span></div>
+        <div class="kv"><span class="kv-k">Server</span><span class="kv-v">Nginx + Docker</span></div>
+        <div class="kv"><span class="kv-k">Status</span><span class="kv-v kv-live"><span class="kv-dot"></span>LIVE</span></div>
       </div>
     </div>
-
-    <div class="stats-row">
-      <div class="stat"><div class="sn">9</div><div class="sl">Labs Completed</div></div>
-      <div class="sdiv"></div>
-      <div class="stat"><div class="sn">TLS 1.3</div><div class="sl">Protocol</div></div>
-      <div class="sdiv"></div>
-      <div class="stat"><div class="sn">RSA-4096</div><div class="sl">Key Strength</div></div>
-      <div class="sdiv"></div>
-      <div class="stat"><div class="sn">100%</div><div class="sl">Encrypted</div></div>
+    <div class="hero-right">
+      <div class="chart-card">
+        <div class="cc-title">SKILL RADAR</div>
+        <canvas id="radarChart"></canvas>
+      </div>
     </div>
   </div>
-  <div class="scroll-hint">scroll ↓</div>
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span>TLSv1.3</span><span class="sep">//</span><span>RSA-4096</span><span class="sep">//</span><span>NGINX:ALPINE</span><span class="sep">//</span><span>DOCKER COMPOSE</span><span class="sep">//</span><span>OPENSSL</span><span class="sep">//</span><span>WIRESHARK</span><span class="sep">//</span><span>IPTABLES</span><span class="sep">//</span><span>OPENVPN</span><span class="sep">//</span><span>NMAP</span><span class="sep">//</span><span>SSH HARDENING</span><span class="sep">//</span><span>TLSv1.3</span><span class="sep">//</span><span>RSA-4096</span><span class="sep">//</span><span>NGINX:ALPINE</span><span class="sep">//</span><span>DOCKER COMPOSE</span><span class="sep">//</span><span>OPENSSL</span><span class="sep">//</span><span>WIRESHARK</span><span class="sep">//</span>
+    </div>
+  </div>
 </section>
 
-<section class="sec" id="about">
-  <div class="con">
-    <div class="sec-label">// 01</div>
-    <h2 class="sec-title">About Me</h2>
+<section id="about" class="sec">
+  <div class="sec-wrap">
+    <div class="sec-head"><div class="sec-num">01</div><h2 class="sec-title">About</h2></div>
     <div class="about-grid">
       <div class="about-text">
-        <p>I'm a Computer Science student at Vizja University Warsaw, building deep skills in systems programming, networking, cybersecurity, and containerized infrastructure.</p>
-        <p>This semester I completed 9 Network Security labs — from raw packet capture to full TLS configuration — each one giving me real hands-on experience with tools used in production environments every day.</p>
-        <p>Lab 09 produced this very site: Nginx inside Docker, secured with a self-signed RSA-4096 certificate over TLSv1.3, with automatic HTTP→HTTPS redirect.</p>
+        <p>I'm a Computer Science student at Vizja University Warsaw with a strong interest in how systems work at every level — from kernel internals to network protocols to application security.</p>
+        <p>This semester's Network Security course pushed me from theory to hands-on practice. I configured real servers, captured live network packets, analyzed TLS handshakes, and built this page as Lab 09's deliverable: a portfolio site served over TLSv1.3 using Nginx in Docker.</p>
       </div>
-      <div class="info-grid">
-        <div class="ic"><div class="ic-l">University</div><div class="ic-v">Vizja University Warsaw</div></div>
-        <div class="ic"><div class="ic-l">Degree</div><div class="ic-v">B.Sc. Computer Science</div></div>
-        <div class="ic"><div class="ic-l">Expected</div><div class="ic-v">2028</div></div>
-        <div class="ic"><div class="ic-l">Focus</div><div class="ic-v">Security &amp; Systems</div></div>
-        <div class="ic"><div class="ic-l">GitHub</div><div class="ic-v"><a href="https://github.com/rachelartemis" target="_blank">@rachelartemis ↗</a></div></div>
-        <div class="ic"><div class="ic-l">Server</div><div class="ic-v">Nginx · Docker · TLSv1.3</div></div>
+      <div class="about-stats">
+        <div class="astat"><div class="as-val">9</div><div class="as-key">Labs Completed</div></div>
+        <div class="astat"><div class="as-val">TLS 1.3</div><div class="as-key">Encryption Protocol</div></div>
+        <div class="astat"><div class="as-val">4096</div><div class="as-key">RSA Key Bits</div></div>
+        <div class="astat"><div class="as-val">100%</div><div class="as-key">Traffic Encrypted</div></div>
+      </div>
+      <div class="about-info">
+        <div class="ai-row"><span class="ai-k">University</span><span class="ai-v">Vizja University Warsaw</span></div>
+        <div class="ai-row"><span class="ai-k">Degree</span><span class="ai-v">B.Sc. Computer Science</span></div>
+        <div class="ai-row"><span class="ai-k">Expected</span><span class="ai-v">2026</span></div>
+        <div class="ai-row"><span class="ai-k">Focus</span><span class="ai-v">Security · OS · Networks</span></div>
+        <div class="ai-row"><span class="ai-k">GitHub</span><span class="ai-v"><a href="https://github.com/rachelartemis" target="_blank">@rachelartemis ↗</a></span></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="sec sec-dark" id="skills">
-  <div class="con">
-    <div class="sec-label">// 02</div>
-    <h2 class="sec-title">Technical Skills</h2>
-    <div class="skill-cols">
-      <div class="skill-col">
-        <div class="sk" data-w="85"><div class="sk-top"><span>Linux / Bash</span><span class="sk-p">85%</span></div><div class="sk-bar"><div class="sk-fill"></div></div></div>
-        <div class="sk" data-w="82"><div class="sk-top"><span>Docker &amp; Nginx</span><span class="sk-p">82%</span></div><div class="sk-bar"><div class="sk-fill"></div></div></div>
-        <div class="sk" data-w="78"><div class="sk-top"><span>Java (OOP)</span><span class="sk-p">78%</span></div><div class="sk-bar"><div class="sk-fill"></div></div></div>
+<section id="skills" class="sec sec-alt">
+  <div class="sec-wrap">
+    <div class="sec-head"><div class="sec-num">02</div><h2 class="sec-title">Skills</h2></div>
+    <div class="skills-layout">
+      <div class="skills-bars">
+        <div class="sbar" data-w="85"><div class="sb-top"><span>Linux / Bash</span><span class="sb-pct">85%</span></div><div class="sb-track"><div class="sb-fill"></div></div></div>
+        <div class="sbar" data-w="82"><div class="sb-top"><span>Docker &amp; Nginx</span><span class="sb-pct">82%</span></div><div class="sb-track"><div class="sb-fill"></div></div></div>
+        <div class="sbar" data-w="78"><div class="sb-top"><span>Java (OOP)</span><span class="sb-pct">78%</span></div><div class="sb-track"><div class="sb-fill"></div></div></div>
+        <div class="sbar" data-w="75"><div class="sb-top"><span>C# / .NET</span><span class="sb-pct">75%</span></div><div class="sb-track"><div class="sb-fill"></div></div></div>
+        <div class="sbar" data-w="72"><div class="sb-top"><span>Python</span><span class="sb-pct">72%</span></div><div class="sb-track"><div class="sb-fill"></div></div></div>
+        <div class="sbar" data-w="70"><div class="sb-top"><span>Networking / TLS</span><span class="sb-pct">70%</span></div><div class="sb-track"><div class="sb-fill"></div></div></div>
       </div>
-      <div class="skill-col">
-        <div class="sk" data-w="75"><div class="sk-top"><span>C# / .NET</span><span class="sk-p">75%</span></div><div class="sk-bar"><div class="sk-fill"></div></div></div>
-        <div class="sk" data-w="72"><div class="sk-top"><span>Python</span><span class="sk-p">72%</span></div><div class="sk-bar"><div class="sk-fill"></div></div></div>
-        <div class="sk" data-w="70"><div class="sk-top"><span>TLS / Networking</span><span class="sk-p">70%</span></div><div class="sk-bar"><div class="sk-fill"></div></div></div>
+      <div class="chart-card chart-card-sm">
+        <div class="cc-title">LAB PERFORMANCE</div>
+        <canvas id="barChart"></canvas>
       </div>
     </div>
-    <div class="tag-row">
-      <span class="tag">Wireshark</span><span class="tag">OpenSSL</span><span class="tag">iptables</span>
-      <span class="tag">nmap</span><span class="tag">SSH</span><span class="tag">Git</span>
-      <span class="tag">VirtualBox</span><span class="tag">MINIX</span><span class="tag">TCP/IP</span>
+    <div class="tech-grid">
+      <div class="tg-chip security">Wireshark</div><div class="tg-chip security">OpenSSL</div><div class="tg-chip security">iptables</div><div class="tg-chip security">nmap</div><div class="tg-chip security">SSH</div><div class="tg-chip security">TLS/SSL</div>
+      <div class="tg-chip infra">Docker</div><div class="tg-chip infra">Nginx</div><div class="tg-chip infra">Linux</div><div class="tg-chip infra">Git</div><div class="tg-chip infra">VirtualBox</div>
+      <div class="tg-chip lang">Java</div><div class="tg-chip lang">C#</div><div class="tg-chip lang">Python</div><div class="tg-chip lang">C</div><div class="tg-chip lang">Bash</div>
     </div>
   </div>
 </section>
 
-<section class="sec" id="labs">
-  <div class="con">
-    <div class="sec-label">// 03</div>
-    <h2 class="sec-title">Network Security Labs</h2>
-    <div class="labs">
-      <div class="lab featured">
-        <div class="lab-head"><span class="lab-n">LAB 09</span><span class="lab-badge">Current Lab</span></div>
-        <div class="lab-title">HTTPS with Nginx &amp; TLS/SSL</div>
-        <div class="lab-desc">Built this portfolio site on Nginx:alpine inside Docker. Generated RSA-4096 self-signed certificate via OpenSSL. Captured and compared HTTP vs HTTPS traffic in Wireshark, analyzing the full TLSv1.3 handshake stage by stage.</div>
-        <div class="lab-tags"><span>Docker</span><span>Nginx</span><span>TLSv1.3</span><span>Wireshark</span><span>OpenSSL</span></div>
-        <div class="lab-ok">✓ Completed &amp; Documented</div>
+<section id="labs" class="sec">
+  <div class="sec-wrap">
+    <div class="sec-head"><div class="sec-num">03</div><h2 class="sec-title">Network Security Labs</h2></div>
+    <div class="labs-grid">
+      <div class="lab-card lab-hero-card">
+        <div class="lc-header"><div class="lc-num">09</div><div class="lc-badge">This Lab · You're looking at it</div></div>
+        <div class="lc-title">HTTPS with Nginx &amp; TLS/SSL</div>
+        <div class="lc-desc">Built this portfolio on Nginx:alpine inside Docker. Generated an RSA-4096 self-signed certificate. Captured the full TLSv1.3 handshake in Wireshark — all 5 stages from Client Hello to encrypted Application Data.</div>
+        <div class="lc-tags"><span>Docker</span><span>Nginx</span><span>TLSv1.3</span><span>OpenSSL</span><span>Wireshark</span></div>
+        <div class="lc-status">✓ Completed &amp; Documented</div>
       </div>
-      <div class="lab"><div class="lab-head"><span class="lab-n">LAB 08</span></div><div class="lab-title">Firewall Rules &amp; iptables</div><div class="lab-desc">Configured iptables chains on Linux for traffic filtering. Implemented port-based rules, allowlists and denylists. Verified with nmap that blocked ports drop packets correctly.</div><div class="lab-tags"><span>iptables</span><span>Linux</span><span>nmap</span></div><div class="lab-ok">✓ Completed</div></div>
-      <div class="lab"><div class="lab-head"><span class="lab-n">LAB 07</span></div><div class="lab-title">VPN &amp; Encrypted Tunnels</div><div class="lab-desc">Set up OpenVPN tunnel between two VMs. Verified in Wireshark that traffic inside the tunnel is fully encrypted and unreadable even with direct packet capture.</div><div class="lab-tags"><span>OpenVPN</span><span>VirtualBox</span><span>Wireshark</span></div><div class="lab-ok">✓ Completed</div></div>
-      <div class="lab"><div class="lab-head"><span class="lab-n">LAB 06</span></div><div class="lab-title">SSH Hardening &amp; Key Auth</div><div class="lab-desc">Disabled password auth on SSH, configured RSA key-pair login. Applied sshd_config hardening: PermitRootLogin no, MaxAuthTries 3.</div><div class="lab-tags"><span>SSH</span><span>RSA</span><span>Linux</span></div><div class="lab-ok">✓ Completed</div></div>
-      <div class="lab"><div class="lab-head"><span class="lab-n">LAB 05</span></div><div class="lab-title">Network Scanning with nmap</div><div class="lab-desc">Host discovery, port scanning, OS fingerprinting, and service detection. Analyzed attack surface and documented open ports on a local test network.</div><div class="lab-tags"><span>nmap</span><span>Recon</span><span>TCP/IP</span></div><div class="lab-ok">✓ Completed</div></div>
-      <div class="lab"><div class="lab-head"><span class="lab-n">LAB 04</span></div><div class="lab-title">Packet Capture &amp; Analysis</div><div class="lab-desc">Captured live traffic with Wireshark. Filtered HTTP, DNS, TCP handshakes. Reconstructed HTTP sessions and demonstrated plaintext credential exposure.</div><div class="lab-tags"><span>Wireshark</span><span>TCP</span><span>DNS</span></div><div class="lab-ok">✓ Completed</div></div>
+      <div class="lab-card"><div class="lc-header"><div class="lc-num">08</div></div><div class="lc-title">Firewall &amp; iptables</div><div class="lc-desc">Built INPUT/OUTPUT chains on Linux. Allowlisted SSH, HTTP, HTTPS; blocked everything else. Verified with nmap.</div><div class="lc-tags"><span>iptables</span><span>Linux</span><span>nmap</span></div><div class="lc-status">✓ Completed</div></div>
+      <div class="lab-card"><div class="lc-header"><div class="lc-num">07</div></div><div class="lc-title">VPN &amp; Encrypted Tunnels</div><div class="lc-desc">Configured OpenVPN between two VMs. Proved in Wireshark that tunnel traffic is indistinguishable ciphertext.</div><div class="lc-tags"><span>OpenVPN</span><span>VirtualBox</span><span>Wireshark</span></div><div class="lc-status">✓ Completed</div></div>
+      <div class="lab-card"><div class="lc-header"><div class="lc-num">06</div></div><div class="lc-title">SSH Hardening</div><div class="lc-desc">Replaced password auth with RSA key pairs. PermitRootLogin no, MaxAuthTries 3, disabled unused ciphers.</div><div class="lc-tags"><span>SSH</span><span>RSA</span><span>Linux</span></div><div class="lc-status">✓ Completed</div></div>
+      <div class="lab-card"><div class="lc-header"><div class="lc-num">05</div></div><div class="lc-title">Network Scanning</div><div class="lc-desc">Host discovery, port scanning, OS fingerprinting with nmap. Documented open ports and attack surface.</div><div class="lc-tags"><span>nmap</span><span>Recon</span><span>TCP/IP</span></div><div class="lc-status">✓ Completed</div></div>
+      <div class="lab-card"><div class="lc-header"><div class="lc-num">04</div></div><div class="lc-title">Packet Capture</div><div class="lc-desc">Captured live traffic with Wireshark. Followed TCP streams, demonstrated cleartext credential exposure over HTTP.</div><div class="lc-tags"><span>Wireshark</span><span>HTTP</span><span>TCP</span></div><div class="lc-status">✓ Completed</div></div>
     </div>
   </div>
 </section>
 
-<section class="sec sec-dark" id="tls">
-  <div class="con">
-    <div class="sec-label">// 04</div>
-    <h2 class="sec-title">TLS 1.3 Handshake — Live Analysis</h2>
-    <p class="sec-sub">Each stage was captured in Wireshark during this lab. The sequence below shows exactly what happened when the browser connected to https://localhost.</p>
-    <div class="tls-flow">
-      <div class="tls-step"><div class="ts-num">01</div><div class="ts-body"><div class="ts-name">Client Hello</div><div class="ts-wire">TLSv1.3 · Client Hello (SNI=localhost)</div><div class="ts-desc">Browser sends supported TLS versions, cipher suites, and SNI=localhost. Not yet encrypted — visible in plain text in Wireshark.</div></div></div>
-      <div class="tls-conn">↓</div>
-      <div class="tls-step"><div class="ts-num">02</div><div class="ts-body"><div class="ts-name">Server Hello + Certificate</div><div class="ts-wire">TLSv1.3 · Server Hello, Change Cipher Spec, Application Data</div><div class="ts-desc">Nginx selects TLSv1.3 and cipher suite. Sends nginx.crt with public key. TLS 1.3 bundles all of this in one flight.</div></div></div>
-      <div class="tls-conn">↓</div>
-      <div class="tls-step"><div class="ts-num">03</div><div class="ts-body"><div class="ts-name">Key Exchange (DHE)</div><div class="ts-wire">TLSv1.3 · Change Cipher Spec, Application Data</div><div class="ts-desc">Both sides independently compute the same session key via Diffie-Hellman Ephemeral. The shared secret never travels over the network.</div></div></div>
-      <div class="tls-conn">↓</div>
-      <div class="tls-step"><div class="ts-num">04</div><div class="ts-body"><div class="ts-name">Change Cipher Spec</div><div class="ts-wire">TLSv1.3 · Change Cipher Spec (94 bytes)</div><div class="ts-desc">Both sides signal that all subsequent packets will be encrypted using the negotiated session key.</div></div></div>
-      <div class="tls-conn">↓</div>
-      <div class="tls-step tls-final"><div class="ts-num green">05</div><div class="ts-body"><div class="ts-name">Encrypted Application Data</div><div class="ts-wire">TLSv1.3 · Application Data (all subsequent packets)</div><div class="ts-desc">All HTTP content is now encrypted. Wireshark shows only opaque Application Data — no HTML, no headers, nothing readable. HTTPS is working.</div></div></div>
+<section id="tls" class="sec sec-alt">
+  <div class="sec-wrap">
+    <div class="sec-head"><div class="sec-num">04</div><h2 class="sec-title">TLS 1.3 Handshake Analysis</h2></div>
+    <p class="sec-sub">Captured live on the loopback interface during Lab 09. Every packet below was observed in Wireshark when the browser first connected to https://localhost.</p>
+    <div class="tls-layout">
+      <div class="tls-steps">
+        <div class="ts-item"><div class="ts-left"><div class="ts-num">01</div><div class="ts-vline"></div></div><div class="ts-body"><div class="ts-title">Client Hello</div><div class="ts-pkt">TLSv1.3 · 1879 bytes · SNI=localhost</div><p class="ts-desc">Browser sends supported TLS versions, cipher suites, and a random nonce. Fully readable in Wireshark — not yet encrypted.</p></div></div>
+        <div class="ts-item"><div class="ts-left"><div class="ts-num">02</div><div class="ts-vline"></div></div><div class="ts-body"><div class="ts-title">Server Hello + Certificate</div><div class="ts-pkt">TLSv1.3 · 3276 bytes · Server Hello, Change Cipher Spec</div><p class="ts-desc">Nginx replies with selected cipher suite and sends nginx.crt (RSA-4096). TLS 1.3 bundles all in one flight.</p></div></div>
+        <div class="ts-item"><div class="ts-left"><div class="ts-num">03</div><div class="ts-vline"></div></div><div class="ts-body"><div class="ts-title">Key Exchange — DHE</div><div class="ts-pkt">Diffie-Hellman Ephemeral · Forward Secrecy</div><p class="ts-desc">Both sides independently compute the same session key. The shared secret never travels over the wire — forward secrecy.</p></div></div>
+        <div class="ts-item"><div class="ts-left"><div class="ts-num">04</div><div class="ts-vline"></div></div><div class="ts-body"><div class="ts-title">Change Cipher Spec</div><div class="ts-pkt">TLSv1.3 · 94 bytes · Both sides confirm</div><p class="ts-desc">Both sides signal that all subsequent packets will use the negotiated symmetric session key.</p></div></div>
+        <div class="ts-item ts-final"><div class="ts-left"><div class="ts-num ts-num-final">05</div></div><div class="ts-body"><div class="ts-title">Encrypted Application Data</div><div class="ts-pkt">TLSv1.3 · Application Data · HTTPS Active</div><p class="ts-desc">All HTTP content is encrypted. Wireshark shows only opaque Application Data — nothing readable. HTTPS works.</p></div></div>
+      </div>
+      <div class="tls-chart-col">
+        <div class="chart-card">
+          <div class="cc-title">TLS vs HTTP TRAFFIC</div>
+          <canvas id="doughnutChart"></canvas>
+          <div class="dc-legend">
+            <div class="dcl-item"><span class="dcl-dot encrypted"></span>Encrypted (HTTPS)</div>
+            <div class="dcl-item"><span class="dcl-dot plain"></span>Plaintext (HTTP)</div>
+            <div class="dcl-item"><span class="dcl-dot handshake"></span>TLS Handshake</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="sec" id="projects">
-  <div class="con">
-    <div class="sec-label">// 05</div>
-    <h2 class="sec-title">Projects</h2>
+<section id="projects" class="sec">
+  <div class="sec-wrap">
+    <div class="sec-head"><div class="sec-num">05</div><h2 class="sec-title">Projects</h2></div>
     <div class="proj-grid">
-      <div class="proj"><div class="proj-lang">Docker · Nginx</div><div class="proj-title">HTTPS Portfolio Server</div><div class="proj-desc">This site — Nginx:alpine in Docker, TLSv1.3, RSA-4096 certificate, HTTP→HTTPS redirect, Wireshark analysis.</div><a class="proj-link" href="https://github.com/rachelartemis/portfolio-lab" target="_blank">View on GitHub ↗</a></div>
-      <div class="proj"><div class="proj-lang">Java</div><div class="proj-title">Flappy Bird (OOP)</div><div class="proj-desc">Object-oriented game with polymorphism using unified ArrayList&lt;GameObject&gt;. Custom graphics, collision detection, scoring system.</div></div>
-      <div class="proj"><div class="proj-lang">C#</div><div class="proj-title">Sorting Algorithm Analyzer</div><div class="proj-desc">Benchmark tool for bubble, insertion, selection, merge, and QuickSort. Performance graphs across multiple input distributions.</div></div>
-      <div class="proj"><div class="proj-lang">C · MINIX 3.2.1</div><div class="proj-title">MINIX System Call</div><div class="proj-desc">Custom system call in MINIX kernel. Modified kernel source, recompiled via PuTTY/SSH in VirtualBox.</div></div>
+      <div class="proj-card proj-featured"><div class="pc-lang">Docker · Nginx · TLS</div><div class="pc-title">HTTPS Portfolio Server</div><p class="pc-desc">This site — Nginx:alpine in Docker, TLSv1.3, self-signed RSA-4096 certificate, full Wireshark traffic analysis documented in the lab report.</p><a class="pc-link" href="https://github.com/rachelartemis/portfolio-lab" target="_blank">github.com/rachelartemis/portfolio-lab ↗</a></div>
+      <div class="proj-card"><div class="pc-lang">Java</div><div class="pc-title">Flappy Bird (OOP)</div><p class="pc-desc">Full game using a unified ArrayList&lt;GameObject&gt; for polymorphism. Custom graphics, physics, collision detection, high-score persistence.</p></div>
+      <div class="proj-card"><div class="pc-lang">C#</div><div class="pc-title">Sorting Algorithm Analyzer</div><p class="pc-desc">Benchmarks bubble, insertion, selection, merge and QuickSort across 1M+ elements. Performance charts showing algorithmic complexity.</p></div>
+      <div class="proj-card"><div class="pc-lang">C · MINIX 3.2.1</div><div class="pc-title">Kernel System Call</div><p class="pc-desc">Custom system call in MINIX 3.2.1 kernel. Modified kernel source via PuTTY/SSH in VirtualBox, recompiled and verified from user space.</p></div>
     </div>
   </div>
 </section>
 
 <footer class="footer">
-  <div class="con">
-    <div class="footer-top">
-      <div><div class="f-logo">[BG]</div><div class="f-sub">Batu Guldogan · Vizja University Warsaw · 2026</div></div>
-      <div class="f-right">
-        <div class="f-group"><div class="f-label">Server Stack</div><div class="f-val">Nginx:alpine · Docker · TLSv1.3 · RSA-4096</div></div>
-        <div class="f-group"><div class="f-label">Repository</div><a class="f-val f-link" href="https://github.com/rachelartemis/portfolio-lab" target="_blank">github.com/rachelartemis/portfolio-lab</a></div>
-      </div>
-    </div>
-    <div class="footer-bot"><span>© 2026 Batu Guldogan</span><span class="f-secure">🔒 Served over TLSv1.3</span></div>
+  <div class="ft-wrap">
+    <div class="ft-left"><div class="ft-name">Batu Guldogan</div><div class="ft-sub">Vizja University Warsaw · Computer Science · 2026</div></div>
+    <div class="ft-right"><div class="ft-stack">Nginx:alpine · Docker · TLSv1.3 · RSA-4096</div><a class="ft-link" href="https://github.com/rachelartemis/portfolio-lab" target="_blank">github.com/rachelartemis/portfolio-lab</a></div>
   </div>
+  <div class="ft-bottom"><span>© 2026 Batu Guldogan</span><span>🔒 End-to-end encrypted · TLSv1.3</span><span>Network Security Systems · Lab 09</span></div>
 </footer>
 
 <script src="app.js"></script>

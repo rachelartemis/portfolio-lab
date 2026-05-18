@@ -1,121 +1,217 @@
-// ── MATRIX RAIN ────────────────────────────────────
-const canvas = document.getElementById('matrix');
+// ── CIRCUIT BOARD ANIMATION ──────────────────────────
+const canvas = document.getElementById('circuit');
 const ctx = canvas.getContext('2d');
-let cols, drops;
-const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノ';
 
-function initMatrix() {
+let nodes = [];
+
+function resize() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-  const fontSize = 13;
-  cols = Math.floor(canvas.width / fontSize);
-  drops = Array(cols).fill(1);
+  buildNodes();
 }
 
-function drawMatrix() {
-  ctx.fillStyle = 'rgba(3,8,16,0.05)';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = '#00d4ff';
-  ctx.font = '13px JetBrains Mono, monospace';
-  for (let i = 0; i < drops.length; i++) {
-    const ch = chars[Math.floor(Math.random() * chars.length)];
-    ctx.globalAlpha = Math.random() * 0.6 + 0.2;
-    ctx.fillText(ch, i * 13, drops[i] * 13);
-    if (drops[i] * 13 > canvas.height && Math.random() > 0.975) drops[i] = 0;
-    drops[i]++;
+function buildNodes() {
+  nodes = [];
+  const count = Math.floor((canvas.width * canvas.height) / 18000);
+  for (let i = 0; i < count; i++) {
+    nodes.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - .5) * .3,
+      vy: (Math.random() - .5) * .3,
+      r: Math.random() * 2 + 1,
+      pulse: Math.random() * Math.PI * 2,
+    });
   }
-  ctx.globalAlpha = 1;
 }
 
-initMatrix();
-window.addEventListener('resize', initMatrix);
-setInterval(drawMatrix, 50);
+function drawCircuit() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-// ── NAV SCROLL ──────────────────────────────────────
-const nav = document.getElementById('nav');
+  // Move nodes
+  nodes.forEach(n => {
+    n.x += n.vx; n.y += n.vy; n.pulse += .02;
+    if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
+    if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+  });
+
+  // Draw connections
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dx = nodes[i].x - nodes[j].x;
+      const dy = nodes[i].y - nodes[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 160) {
+        const alpha = (1 - dist / 160) * .6;
+        ctx.strokeStyle = `rgba(220,38,38,${alpha})`;
+        ctx.lineWidth = .5;
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  // Draw nodes
+  nodes.forEach(n => {
+    const pulse = (Math.sin(n.pulse) + 1) / 2;
+    ctx.fillStyle = `rgba(220,38,38,${.4 + pulse * .6})`;
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  requestAnimationFrame(drawCircuit);
+}
+
+resize();
+window.addEventListener('resize', resize);
+drawCircuit();
+
+// ── NAV SCROLL ───────────────────────────────────────
 window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
+  document.getElementById('nav').classList.toggle('on', window.scrollY > 40);
 });
 
-// ── TERMINAL ANIMATION ──────────────────────────────
-const commands = [
-  { type: 'cmd', text: 'docker compose up -d' },
-  { type: 'out', text: '✓ Container nginx-web-server  Started' },
-  { type: 'cmd', text: 'openssl req -x509 -newkey rsa:4096 -days 365 -nodes' },
-  { type: 'out', text: '✓ nginx.crt and nginx.private.key generated' },
-  { type: 'cmd', text: 'curl -sk https://localhost | grep title' },
-  { type: 'out', text: '<title>Batu Guldogan — Network Security Portfolio</title>' },
-  { type: 'cmd', text: 'git add . && git commit -m "Lab 09: TLS/SSL setup"' },
-  { type: 'out', text: '[main a3f2c91] Lab 09: TLS/SSL setup — 6 files changed' },
-  { type: 'cmd', text: 'git push origin main' },
-  { type: 'ok',  text: '✓ pushed to github.com/rachelartemis/portfolio-lab' },
-];
+// ── CHARTS ───────────────────────────────────────────
+window.addEventListener('load', () => {
+  const red = '#ef4444';
+  const red2 = 'rgba(239,68,68,.15)';
+  const gold = '#f59e0b';
+  const gridColor = 'rgba(58,16,16,.8)';
+  const textColor = '#5a2020';
 
-const tlines = document.getElementById('tlines');
-const tcaret = document.getElementById('tcaret');
-let delay = 800;
+  // Radar Chart
+  const radarCtx = document.getElementById('radarChart');
+  if (radarCtx) {
+    new Chart(radarCtx, {
+      type: 'radar',
+      data: {
+        labels: ['Linux/Bash','Docker/Nginx','Java','C#','Python','Networking'],
+        datasets: [{
+          label: 'Skill Level',
+          data: [85, 82, 78, 75, 72, 70],
+          borderColor: red,
+          backgroundColor: 'rgba(220,38,38,.12)',
+          pointBackgroundColor: red,
+          pointBorderColor: '#0a0000',
+          pointBorderWidth: 2,
+          pointRadius: 4,
+          borderWidth: 2,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: {
+          r: {
+            min: 0, max: 100,
+            grid: { color: gridColor },
+            angleLines: { color: gridColor },
+            pointLabels: {
+              color: textColor,
+              font: { family: 'IBM Plex Mono', size: 10 }
+            },
+            ticks: { display: false, stepSize: 25 }
+          }
+        }
+      }
+    });
+  }
 
-function addLine(html) {
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  tlines.appendChild(div);
-  tlines.scrollTop = tlines.scrollHeight;
-}
+  // Bar Chart
+  const barCtx = document.getElementById('barChart');
+  if (barCtx) {
+    new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Lab04','Lab05','Lab06','Lab07','Lab08','Lab09'],
+        datasets: [{
+          label: 'Completion',
+          data: [100, 100, 100, 100, 100, 100],
+          backgroundColor: [
+            'rgba(220,38,38,.3)','rgba(220,38,38,.4)',
+            'rgba(220,38,38,.5)','rgba(220,38,38,.6)',
+            'rgba(220,38,38,.8)','rgba(220,38,38,1)',
+          ],
+          borderColor: red,
+          borderWidth: 1,
+          borderRadius: 3,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: {
+            grid: { color: gridColor },
+            ticks: { color: textColor, font: { family: 'IBM Plex Mono', size: 9 } }
+          },
+          y: {
+            min: 0, max: 100,
+            grid: { color: gridColor },
+            ticks: { color: textColor, font: { family: 'IBM Plex Mono', size: 9 }, callback: v => v + '%' }
+          }
+        }
+      }
+    });
+  }
 
-commands.forEach(({ type, text }) => {
-  if (type === 'cmd') {
-    setTimeout(() => {
-      const span = document.createElement('span');
-      span.className = 'tl cmd';
-      span.innerHTML = '<span class="tp">batu@vizja:~$&nbsp;</span><span class="tc"></span>';
-      tlines.appendChild(span);
-      const tc = span.querySelector('.tc');
-      let i = 0;
-      const iv = setInterval(() => {
-        tc.textContent += text[i++];
-        if (i >= text.length) clearInterval(iv);
-      }, 36);
-    }, delay);
-    delay += text.length * 36 + 300;
-  } else {
-    setTimeout(() => {
-      const span = document.createElement('span');
-      span.className = `tl ${type}`;
-      span.textContent = text;
-      tlines.appendChild(span);
-    }, delay);
-    delay += 200;
+  // Doughnut Chart
+  const dCtx = document.getElementById('doughnutChart');
+  if (dCtx) {
+    new Chart(dCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Encrypted (HTTPS)', 'Plaintext (HTTP)', 'TLS Handshake'],
+        datasets: [{
+          data: [78, 17, 5],
+          backgroundColor: [red, '#1f2937', gold],
+          borderColor: '#0a0000',
+          borderWidth: 3,
+        }]
+      },
+      options: {
+        responsive: true,
+        cutout: '68%',
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: { label: ctx => ` ${ctx.parsed}%` }
+          }
+        }
+      }
+    });
   }
 });
 
 // ── SKILL BARS ──────────────────────────────────────
-const fills = document.querySelectorAll('.sk-fill');
 const skObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
-      const pct = e.target.closest('.sk').dataset.w;
-      e.target.style.setProperty('--w', pct + '%');
-      e.target.classList.add('on');
-      e.target.style.width = pct + '%';
+      const w = e.target.closest('.sbar').dataset.w;
+      e.target.style.width = w + '%';
       skObs.unobserve(e.target);
     }
   });
-}, { threshold: 0.4 });
-fills.forEach(f => skObs.observe(f));
+}, { threshold: 0.3 });
+document.querySelectorAll('.sb-fill').forEach(f => skObs.observe(f));
 
-// ── SECTION FADE-IN ─────────────────────────────────
-const secObs = new IntersectionObserver(entries => {
+// ── FADE IN ──────────────────────────────────────────
+const fadeObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       e.target.style.opacity = '1';
       e.target.style.transform = 'translateY(0)';
+      fadeObs.unobserve(e.target);
     }
   });
-}, { threshold: 0.08 });
+}, { threshold: 0.05 });
 
-document.querySelectorAll('.lab, .proj, .ic, .tls-step, .sk').forEach(el => {
+document.querySelectorAll('.lab-card, .proj-card, .astat, .ai-row, .ts-item, .kv').forEach(el => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(20px)';
   el.style.transition = 'opacity .5s ease, transform .5s ease';
-  secObs.observe(el);
+  fadeObs.observe(el);
 });
